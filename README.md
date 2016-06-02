@@ -9,3 +9,4 @@ A Scala scheduler that supports multiple cron notations. The project follows the
  * [1988: Calendar Queues: A Fast O(1) Priority Queue Implementation for the Simulation Event Set Problem](http://pi4.informatik.uni-mannheim.de/pi4.data/content/courses/2004-ss/netsim/area51/Brown1988a.pdf)
  * [2000: Snoopy calendar queue](http://www.informs-sim.org/wsc00papers/068.PDF)
  * [Study of Optimised bucket widths in Calendar Queue for Discrete Event Simulator](http://pioneer.netserv.chula.ac.th/~achaodit/paper5.pdf)
+ * [Ladder queue: An O(1) priority queue structure for large-scale discrete event simulation](http://dl.acm.org/citation.cfm?id=1103324)
