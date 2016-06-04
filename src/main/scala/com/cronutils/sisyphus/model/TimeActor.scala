@@ -10,24 +10,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package example
-
-import com.cronutils.model.CronType
-import com.cronutils.model.definition.CronDefinitionBuilder
-import com.cronutils.parser.CronParser
-import com.cronutils.sisyphus.model.{CronTask, Scheduler}
+package com.cronutils.sisyphus.model
+import akka.actor._
 import org.joda.time.DateTime
 
-object App {
-  def main(args: Array[String]) {
-    val cronparser = new CronParser(CronDefinitionBuilder.instanceDefinitionFor(CronType.QUARTZ))
-    val scheduler = new Scheduler()
-    val crontask = new CronTask("timeprinter") {
-      override def execute(): Unit = println(s"time is ${DateTime.now()}")
+class TimeActor(actorsystem: ActorSystem) extends Actor {
+  def receive = {
+    case "newsecond" => {
+      var now = DateTime.now()
+      now = new DateTime(now.getYear, now.getMonthOfYear, now.getDayOfMonth, now.getHourOfDay, now.getMinuteOfHour, now.getSecondOfMinute)
+      val event = new DateEvent(now)
+      actorsystem.actorSelection("/user/task-*") ! event
     }
-
-    var cron = cronparser.parse("*/5 * * * * ? *")
-
-    scheduler.schedule(cron, crontask)
   }
 }

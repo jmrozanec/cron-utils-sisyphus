@@ -2,6 +2,36 @@ Sisyphus
 ===========
 A Scala scheduler that supports multiple cron notations. The project follows the [Semantic Versioning Convention](http://semver.org/) and uses Apache 2.0 license.
 
+## How to use it?
+
+    import com.cronutils.model.CronType
+    import com.cronutils.model.definition.CronDefinitionBuilder
+    import com.cronutils.parser.CronParser
+    import com.cronutils.sisyphus.model.{CronTask, Scheduler}
+    import org.joda.time.DateTime
+    
+    val scheduler = new Scheduler()
+    
+    //declare parsers and crons. We support parsing multiple cron formats!
+    val quartzparser = new CronParser(CronDefinitionBuilder.instanceDefinitionFor(CronType.QUARTZ))
+    val unixcronparser = new CronParser(CronDefinitionBuilder.instanceDefinitionFor(CronType.UNIX))
+    var qzcron = quartzparser.parse("*/5 * * * * ? *")
+    var nixcron = unixcronparser.parse("* * * * *")
+    
+    //define tasks to be executed!
+    val qzcrontask = new CronTask("qztimeprinter") {
+      override def execute(): Unit = println(s"We got a Quartz match! ${DateTime.now()}")
+    }
+    val nixcrontask = new CronTask("nixtimeprinter") {
+      override def execute(): Unit = println(s"We got a Unix match! ${DateTime.now()}")
+    }
+    
+    //schedule and enjoy!
+    scheduler.schedule(qzcron, qzcrontask)
+    scheduler.schedule(nixcron, nixcrontask)
+
+Sisyphus leverages cron-utils library to parse cron expressions and find if a date matches it. You can use any cron-expression to schedule a task.
+
 # Resources
  * [A list of papers published on this topic](http://stackoverflow.com/questions/6004978/what-is-a-calendar-queue)
  * [1977: An efficient data structure for the simulation event set](http://dl.acm.org/citation.cfm?id=359801)
