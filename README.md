@@ -30,7 +30,7 @@ A Scala scheduler that supports multiple cron notations. The project follows the
     scheduler.schedule(qzcron, qzcrontask)
     scheduler.schedule(nixcron, nixcrontask)
 
-Sisyphus leverages cron-utils library to parse cron expressions and find if a date matches it. You can use any cron-expression to schedule a task.
+Sisyphus leverages [cron-utils](https://github.com/jmrozanec/cron-utils) library to parse cron expressions and find if a date matches it. You can use any cron-expression to schedule a task.
 
 # Resources
  * [A list of papers published on this topic](http://stackoverflow.com/questions/6004978/what-is-a-calendar-queue)
